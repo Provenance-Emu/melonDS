@@ -1186,7 +1186,7 @@ void ResetBlockCache()
 
     JITCompiler->Reset();
 }
-
+extern void pthread_jit_write_protect_np(int enabled);
 void JitEnableWrite()
 {
     #if defined(__APPLE__) && defined(__aarch64__)

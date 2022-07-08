@@ -96,7 +96,7 @@ void retro_get_system_info(struct retro_system_info *info)
 #ifndef GIT_VERSION
 #define GIT_VERSION ""
 #endif
-   info->library_version  = MELONDS_VERSION GIT_VERSION;
+   info->library_version  = "";
    info->need_fullpath    = false;
    info->valid_extensions = "nds|dsi";
 }
