@@ -49,6 +49,8 @@ static_assert(offsetof(ARM, CPSR) == ARM_CPSR_offset, "");
 static_assert(offsetof(ARM, Cycles) == ARM_Cycles_offset, "");
 static_assert(offsetof(ARM, StopExecution) == ARM_StopExecution_offset, "");
 
+extern void pthread_jit_write_protect_np(int enabled);
+
 namespace ARMJIT
 {
 
@@ -1186,10 +1188,24 @@ void ResetBlockCache()
 
     JITCompiler->Reset();
 }
-extern void pthread_jit_write_protect_np(int enabled);
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunguarded-availability"
+#pragma clang diagnostic ignored "-Wunsupported-availability-guard"
+#pragma clang diagnostic ignored "-Wavailability"
+#pragma clang diagnostic ignored "-Wall"
+#pragma clang diagnostic ignored "-Wextra"
+#pragma clang diagnostic ignored "-Wundef"
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunguarded-availability"
+#pragma GCC diagnostic ignored "-Wunsupported-availability-guard"
+#pragma GCC diagnostic ignored "-Wavailability"
+#pragma GCC diagnostic ignored "-Wall"
+#pragma GCC diagnostic ignored "-Wextra"
+#pragma GCC diagnostic ignored "-Wundef"
 void JitEnableWrite()
 {
-    #if defined(__APPLE__) && defined(__aarch64__)
+
+    #if defined(__APPLE__) && defined(__aarch64__) && !defined(IOS)
         if (__builtin_available(macOS 11.0, *))
             pthread_jit_write_protect_np(false);
     #endif
@@ -1197,10 +1213,11 @@ void JitEnableWrite()
 
 void JitEnableExecute()
 {
-    #if defined(__APPLE__) && defined(__aarch64__)
+    #if defined(__APPLE__) && defined(__aarch64__) && !defined(IOS)
         if (__builtin_available(macOS 11.0, *))
             pthread_jit_write_protect_np(true);
     #endif
 }
-
+#pragma GCC diagnostic pop
+#pragma clang diagnostic pop
 }
