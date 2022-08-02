@@ -386,8 +386,10 @@ Info Decode(bool thumb, u32 num, u32 instr)
         {
             if (res.Kind == tk_LDR_PCREL)
             {
+#if JIT_ENABLED
                 if (!Config::JIT_LiteralOptimisations)
                     res.SrcRegs |= 1 << 15;
+#endif
                 res.SpecialKind = special_LoadLiteral;
             }
             else
