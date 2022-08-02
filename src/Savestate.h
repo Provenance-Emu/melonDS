@@ -1,5 +1,5 @@
 /*
-    Copyright 2016-2021 Arisotura
+    Copyright 2016-2022 melonDS team
 
     This file is part of melonDS.
 
@@ -19,6 +19,7 @@
 #ifndef SAVESTATE_H
 #define SAVESTATE_H
 
+#include <string>
 #include <stdio.h>
 #include "types.h"
 
@@ -35,7 +36,7 @@ public:
 #ifdef __LIBRETRO__
     Savestate(void *data, size_t size, bool save);
 #else
-    Savestate(const char* filename, bool save);
+    Savestate(std::string filename, bool save);
 #endif
     ~Savestate();
 
