@@ -16,6 +16,8 @@
     with melonDS. If not, see http://www.gnu.org/licenses/.
 */
 
+#if JIT_ENABLED
+
 #include "ARMJIT_Compiler.h"
 
 #include "../ARMJIT_Internal.h"
@@ -980,3 +982,4 @@ void Compiler::Comp_AddCycles_CD()
 }
 
 }
+#endif // JIT_ENABLED

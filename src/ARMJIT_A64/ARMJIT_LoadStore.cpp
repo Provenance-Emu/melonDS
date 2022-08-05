@@ -16,6 +16,7 @@
     with melonDS. If not, see http://www.gnu.org/licenses/.
 */
 
+#if JIT_ENABLED
 #include "ARMJIT_Compiler.h"
 
 #include "../Config.h"
@@ -858,3 +859,4 @@ void Compiler::T_Comp_LDMIA_STMIA()
 }
 
 }
+#endif // JIT_ENABLED

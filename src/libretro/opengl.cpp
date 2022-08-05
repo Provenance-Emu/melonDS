@@ -1,4 +1,5 @@
 #include <glsm/glsm.h>
+#include <glsm/glsmsym.h>
 
 #include "input.h"
 #include "libretro_state.h"
@@ -56,6 +57,10 @@ static bool setup_opengl(void)
    glUniform1i(uni_id, 0);
 
    memset(&GL_ShaderConfig, 0, sizeof(GL_ShaderConfig));
+#define GL_UNIFORM_BUFFER                 0x8A11
+#define GL_RGBA8UI                        0x8D7C
+#define GL_BGR_INTEGER                    0x8D9A
+#define GL_RGBA_INTEGER                   0x8D99
 
    glGenBuffers(1, &ubo);
    glBindBuffer(GL_UNIFORM_BUFFER, ubo);
@@ -171,7 +176,7 @@ void setup_opengl_frame_state(void)
    GL_ShaderConfig.cursorPos[3] = -1.0f;
 
    glBindBuffer(GL_UNIFORM_BUFFER, ubo);
-   void* unibuf = glMapBuffer(GL_UNIFORM_BUFFER, GL_WRITE_ONLY);
+   void* unibuf = glMapBuffer(GL_UNIFORM_BUFFER, 0x88B9);
    if (unibuf) memcpy(unibuf, &GL_ShaderConfig, sizeof(GL_ShaderConfig));
    glUnmapBuffer(GL_UNIFORM_BUFFER);
 
@@ -380,7 +385,7 @@ void render_opengl_frame(bool sw)
       GL_ShaderConfig.cursorPos[3] = (((float)(input_state.touch_y) + (float)(CURSOR_SIZE)) / ((float)VIDEO_WIDTH * 1.5)) + 0.5f;
 
       glBindBuffer(GL_UNIFORM_BUFFER, ubo);
-      void* unibuf = glMapBuffer(GL_UNIFORM_BUFFER, GL_WRITE_ONLY);
+      void* unibuf = glMapBuffer(GL_UNIFORM_BUFFER, 0x88B9);
       if (unibuf) memcpy(unibuf, &GL_ShaderConfig, sizeof(GL_ShaderConfig));
       glUnmapBuffer(GL_UNIFORM_BUFFER);
    }
@@ -409,7 +414,9 @@ void render_opengl_frame(bool sw)
    }
    else
    {
+#ifdef OGLRENDERER_ENABLED
       GPU::CurGLCompositor->BindOutputTexture(frontbuf);
+#endif
    }
 
    GLint filter = opengl_linear_filtering ? GL_LINEAR : GL_NEAREST;

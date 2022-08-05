@@ -1170,7 +1170,7 @@ void GLRenderer::RenderFrame()
     ShaderConfig.uFogShift = RenderFogShift;
 
     glBindBuffer(GL_UNIFORM_BUFFER, ShaderConfigUBO);
-    void* unibuf = glMapBuffer(GL_UNIFORM_BUFFER, GL_WRITE_ONLY);
+    void* unibuf = glMapBuffer(GL_UNIFORM_BUFFER, 0x88B9);
     if (unibuf) memcpy(unibuf, &ShaderConfig, sizeof(ShaderConfig));
     glUnmapBuffer(GL_UNIFORM_BUFFER);
 
@@ -1308,7 +1308,7 @@ u32* GLRenderer::GetLine(int line)
 
     if (line == 0)
     {
-        u8* data = (u8*)glMapBuffer(GL_PIXEL_PACK_BUFFER, GL_READ_ONLY);
+        u8* data = (u8*)glMapBuffer(GL_PIXEL_PACK_BUFFER, 0x88B8);
         if (data) memcpy(&Framebuffer[stride*0], data, 4*stride*192);
         glUnmapBuffer(GL_PIXEL_PACK_BUFFER);
     }

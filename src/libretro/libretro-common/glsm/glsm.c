@@ -2667,6 +2667,8 @@ static void glsm_state_setup(void)
    gl_state.cap_translate[SGL_STENCIL_TEST]         = GL_STENCIL_TEST;
 
 #ifndef HAVE_OPENGLES
+#define GL_COLOR_LOGIC_OP 0x0BF2
+
    gl_state.cap_translate[SGL_COLOR_LOGIC_OP]       = GL_COLOR_LOGIC_OP;
    gl_state.cap_translate[SGL_CLIP_DISTANCE0]       = GL_CLIP_DISTANCE0;
    gl_state.cap_translate[SGL_DEPTH_CLAMP]          = GL_DEPTH_CLAMP;
@@ -2706,6 +2708,8 @@ static void glsm_state_setup(void)
    gl_state.depthfunc.func              = GL_LESS;
 
 #ifndef HAVE_OPENGLES
+#define GL_COPY 0x1503
+
    gl_state.colorlogicop                = GL_COPY;
 #endif
 
