@@ -69,7 +69,7 @@ NS_INLINE CF_RETURNS_RETAINED CFTypeRef CFBridgingRetainCompat(id X)
 #endif
 
 #ifdef __OBJC__
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 #import <GLKit/GLKit.h>
 #import <Foundation/Foundation.h>
 #endif
