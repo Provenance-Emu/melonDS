@@ -116,16 +116,40 @@ static int dir_list_read(const char *dir,
       char file_path[PATH_MAX_LENGTH];
       const char *name                = retro_dirent_get_name(entry);
 
-      if (!include_hidden && *name == '.')
-         continue;
-      if (!strcmp(name, ".") || !strcmp(name, ".."))
-         continue;
+      if (name[0] == '.')
+      {
+         /* Do not include hidden files and directories */
+         if (!include_hidden)
+            continue;
 
-      file_path[0] = '\0';
-      fill_pathname_join(file_path, dir, name, sizeof(file_path));
+         /* char-wise comparisons to avoid string comparison */
+
+         /* Do not include current dir */
+         if (name[1] == '\0')
+            continue;
+         /* Do not include parent dir */
+         if (name[1] == '.' && name[2] == '\0')
+            continue;
+      }
+
+      fill_pathname_join_special(file_path, dir, name, sizeof(file_path));
 
       if (retro_dirent_is_dir(entry, NULL))
       {
+         /* Exclude this frequent hidden dir on platforms which can not handle hidden attribute */
+#ifndef _WIN32
+         if (!include_hidden && strcmp(name, "System Volume Information") == 0)
+            continue;
+#endif
+#if defined(IOS) || defined(OSX)
+         if (string_ends_with(name, ".framework"))
+         {
+            attr.i = RARCH_PLAIN_FILE;
+            if (!string_list_append(list, file_path, attr))
+               goto error;
+            continue;
+         }
+#endif
          if (recursive)
             dir_list_read(file_path, list, ext_list, include_dirs,
                   include_hidden, include_compressed, recursive);
