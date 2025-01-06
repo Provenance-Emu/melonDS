@@ -72,7 +72,7 @@ XXH32        6.8 GB/s            6.0 GB/s
 */
 
 #if defined (__cplusplus)
-//extern "C" {
+extern "C" {
 #endif
 
 /* ****************************
@@ -1961,5 +1961,5 @@ XXH_PUBLIC_API XXH64_hash_t XXH64_hashFromCanonical(const XXH64_canonical_t* src
 
 
 #if defined (__cplusplus)
-//}
+}
 #endif

@@ -27,7 +27,7 @@
 
 #ifndef HAVE_PSGL
 #if defined(HAVE_OPENGLES2)
-//#include "glsym_es2.h"
+#include "glsym_es2.h"
 #elif defined(HAVE_OPENGLES3)
 #include "glsym_es3.h"
 #else

@@ -23,7 +23,7 @@
 #define FF_DEFINED	86631	/* Revision ID */
 
 #ifdef __cplusplus
-//extern "C" {
+extern "C" {
 #endif
 
 #include "ffconf.h"		/* FatFs configuration options */
@@ -423,7 +423,7 @@ void ff_disk_close();
 
 
 #ifdef __cplusplus
-//}
+}
 #endif
 
 #endif /* FF_DEFINED */
